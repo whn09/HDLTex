@@ -1,5 +1,6 @@
 import re
-from sklearn.cross_validation import train_test_split, cross_val_score
+#from sklearn.cross_validation import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -224,4 +225,4 @@ def loadData():
         L2_Test[i] = np.array(L2_Test[i])
         content_L2_Train[i] = np.array(content_L2_Train[i])
         content_L2_Test[i] = np.array(content_L2_Test[i])
-    return (X_train,y_train,X_test,y_test,content_L2_Train,L2_Train,content_L2_Test,L2_Test,number_of_classes_L2)
+    return (X_train,y_train,X_test,y_test,content_L2_Train,L2_Train,content_L2_Test,L2_Test,number_of_classes_L2,number_of_classes_L1)

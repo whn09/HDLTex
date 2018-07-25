@@ -27,14 +27,15 @@ if __name__ == "__main__":
     '''
     location of input data in two ways 
     1: Tokenizer that is using GLOVE
-    1: loadData that is using couting words or tf-idf
+    2: loadData that is using couting words or tf-idf
     '''
 
-    X_train, y_train, X_test, y_test, content_L2_Train, L2_Train, content_L2_Test, L2_Test, number_of_classes_L2, word_index, embeddings_index, number_of_classes_L1 =  \
-            Data_helper.loadData_Tokenizer(MAX_NB_WORDS,MAX_SEQUENCE_LENGTH)
+    X_train, y_train, X_test, y_test, content_L2_Train, L2_Train, content_L2_Test, L2_Test, number_of_classes_L2, word_index, embeddings_index, number_of_classes_L1 = Data_helper.loadData_Tokenizer(MAX_NB_WORDS,MAX_SEQUENCE_LENGTH)
     print('X_train:', len(X_train), 'y_train:', len(y_train), 'X_test:', len(X_test), 'y_test:', len(y_test), 'content_L2_Train:', len(content_L2_Train), 'L2_Train:', len(L2_Train), 'content_L2_Test:', len(content_L2_Test), 'L2_Test:', len(L2_Test), 'number_of_classes_L2:', number_of_classes_L2, 'word_index:', len(word_index), 'embeddings_index:', len(embeddings_index), 'number_of_classes_L1:', number_of_classes_L1)
 
-    #X_train_DNN, y_train_DNN, X_test_DNN, y_test_DNN, content_L2_Train_DNN, L2_Train_DNN, content_L2_Test_DNN, L2_Test_DNN, number_of_classes_L2_DNN = Data_helper.loadData()
+    #X_train_DNN, y_train_DNN, X_test_DNN, y_test_DNN, content_L2_Train_DNN, L2_Train_DNN, content_L2_Test_DNN, L2_Test_DNN, number_of_classes_L2_DNN, number_of_classes_L1 = Data_helper.loadData()
+    #print('X_train_DNN:', len(X_train_DNN), 'y_train_DNN:', len(y_train_DNN), 'X_test_DNN:', len(X_test_DNN), 'y_test_DNN:', len(y_test_DNN), 'content_L2_Train_DNN:', len(content_L2_Train_DNN), 'L2_Train_DNN:', len(L2_Train_DNN), 'content_L2_Test_DNN:', len(content_L2_Test_DNN), 'L2_Test_DNN:', len(L2_Test_DNN), 'number_of_classes_L2_DNN:', number_of_classes_L2_DNN, 'number_of_classes_L1:', number_of_classes_L1)
+
     print("Loading Data is Done")
     #######################DNN Level 1########################
     if L1_model == 0:
@@ -79,7 +80,6 @@ if __name__ == "__main__":
                       batch_size=batch_size_L2)
     ######################CNN Level 2################################
     if L2_model == 1:
-
         for i in range(0, number_of_classes_L1):
             print('Create Sub model of ', i)
             HDLTex.append(Sequential())
