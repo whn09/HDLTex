@@ -18,7 +18,7 @@ if __name__ == "__main__":
     EMBEDDING_DIM = 100 #embedding dimension you can change it to {25, 100, 150, and 300} but need to change glove version
     batch_size_L1 = 64 # batch size in Level 1
     batch_size_L2 = 64 # batch size in Level 2
-    epochs = 10
+    epochs = 1
 
     L1_model =1 # 0 is DNN, 1 is CNN, and 2 is RNN for Level 1
     L2_model =2 # 0 is DNN, 1 is CNN, and 2 is RNN for Level 2
@@ -59,7 +59,7 @@ if __name__ == "__main__":
         preds = model.predict(X_test, batch_size=128)
         fout = open('preds.txt', 'w')
         for i in range(len(X_test)):
-            fout.write(X_test[i]+'\t'+preds[i]+'\n')
+            fout.write(str(preds[i])+'\n')
     #######################RNN Level 1########################
     if L1_model == 2:
         print('Create model of RNN')
@@ -107,7 +107,7 @@ if __name__ == "__main__":
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
             fout = open('preds_'+str(i)+'.txt', 'w')
             for j in range(len(content_L2_Test[i])):
-                fout.write(content_L2_Test[i][j] + '\t' + preds[j] + '\n')
+                fout.write(str(preds[j]) + '\n')
 
 
 
