@@ -34,7 +34,6 @@ def download_and_extract():
     filename = DATA_URL.split('/')[-1]
     filepath = os.path.join(dest_directory, filename)
 
-
     path = os.path.abspath(dest_directory)
     if not os.path.exists(filepath):
         def _progress(count, block_size, total_size):

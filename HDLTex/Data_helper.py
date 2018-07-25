@@ -1,5 +1,5 @@
 import re
-#from sklearn.cross_validation import train_test_split, cross_val_score
+# from sklearn.cross_validation import train_test_split, cross_val_score
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from keras.preprocessing.text import Tokenizer
@@ -9,16 +9,16 @@ import Download_Glove as GloVe
 import numpy as np
 import os
 
-
 ''' Location of the dataset'''
 path_WOS = WOS.download_and_extract()
 GLOVE_DIR = GloVe.download_and_extract()
 print(GLOVE_DIR)
 
 base_dir = '../../dataset/haha_single_video_item/haha_single_video_item.raw.20180723'
-filename_X = base_dir+'.X'
-filename_Y1 = base_dir+'.Y1'
-filename_Y2 = base_dir+'.Y2'
+filename_X = base_dir + '.X'
+filename_Y1 = base_dir + '.Y1'
+filename_Y2 = base_dir + '.Y2'
+
 
 def clean_str(string):
     """
@@ -29,6 +29,7 @@ def clean_str(string):
     string = re.sub(r"\'", "", string)
     string = re.sub(r"\"", "", string)
     return string.strip().lower()
+
 
 def text_cleaner(text):
     text = text.replace(".", "")
@@ -60,12 +61,10 @@ def text_cleaner(text):
     return text.lower()
 
 
-def loadData_Tokenizer(MAX_NB_WORDS,MAX_SEQUENCE_LENGTH):
-
-    
-    #fname = os.path.join(path_WOS,"WebOfScience/WOS5736/X.txt")
-    #fnamek = os.path.join(path_WOS,"WebOfScience/WOS5736/YL1.txt")
-    #fnameL2 = os.path.join(path_WOS,"WebOfScience/WOS5736/YL2.txt")
+def loadData_Tokenizer(MAX_NB_WORDS, MAX_SEQUENCE_LENGTH):
+    # fname = os.path.join(path_WOS,"WebOfScience/WOS5736/X.txt")
+    # fnamek = os.path.join(path_WOS,"WebOfScience/WOS5736/YL1.txt")
+    # fnameL2 = os.path.join(path_WOS,"WebOfScience/WOS5736/YL2.txt")
     fname = filename_X
     fnamek = filename_Y1
     fnameL2 = filename_Y2
@@ -82,7 +81,7 @@ def loadData_Tokenizer(MAX_NB_WORDS,MAX_SEQUENCE_LENGTH):
         contentL2 = [x.strip() for x in contentL2]
     Label = np.matrix(contentk, dtype=int)
     Label = np.transpose(Label)
-    number_of_classes_L1 = np.max(Label)+1 #number of classes in Level 1
+    number_of_classes_L1 = np.max(Label) + 1  # number of classes in Level 1
 
     Label_L2 = np.matrix(contentL2, dtype=int)
     Label_L2 = np.transpose(Label_L2)
@@ -90,8 +89,8 @@ def loadData_Tokenizer(MAX_NB_WORDS,MAX_SEQUENCE_LENGTH):
 
     Label = np.column_stack((Label, Label_L2))
 
-    number_of_classes_L2 = np.zeros(number_of_classes_L1,dtype=int) #number of classes in Level 2 that is 1D array with size of (number of classes in level one,1)
-
+    number_of_classes_L2 = np.zeros(number_of_classes_L1,
+                                    dtype=int)  # number of classes in Level 2 that is 1D array with size of (number of classes in level one,1)
 
     tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
     tokenizer.fit_on_texts(content)
@@ -124,10 +123,10 @@ def loadData_Tokenizer(MAX_NB_WORDS,MAX_SEQUENCE_LENGTH):
         content_L2_Test.append([])
 
         X_train = np.array(X_train)
-        X_test= np.array(X_test)
+        X_test = np.array(X_test)
     for i in range(0, X_train.shape[0]):
         L2_Train[y_train[i, 0]].append(y_train[i, 1])
-        number_of_classes_L2[y_train[i, 0]] = max(number_of_classes_L2[y_train[i, 0]],(y_train[i, 1]+1))
+        number_of_classes_L2[y_train[i, 0]] = max(number_of_classes_L2[y_train[i, 0]], (y_train[i, 1] + 1))
         content_L2_Train[y_train[i, 0]].append(X_train[i])
 
     for i in range(0, X_test.shape[0]):
@@ -153,21 +152,20 @@ def loadData_Tokenizer(MAX_NB_WORDS,MAX_SEQUENCE_LENGTH):
         try:
             coefs = np.asarray(values[1:], dtype='float32')
         except:
-            print("Warnning"+str(values)+" in" + str(line))
+            print("Warnning" + str(values) + " in" + str(line))
         embeddings_index[word] = coefs
     f.close()
     print('Total %s word vectors.' % len(embeddings_index))
-    return (X_train, y_train, X_test, y_test, content_L2_Train, L2_Train, content_L2_Test, L2_Test, number_of_classes_L2,word_index,embeddings_index,number_of_classes_L1)
-
-
-
+    return (
+    X_train, y_train, X_test, y_test, content_L2_Train, L2_Train, content_L2_Test, L2_Test, number_of_classes_L2,
+    word_index, embeddings_index, number_of_classes_L1)
 
 
 def loadData():
     WOS.download_and_extract()
-    #fname = os.path.join(path_WOS,"WebOfScience/WOS5736/X.txt")
-    #fnamek = os.path.join(path_WOS,"WebOfScience/WOS5736/YL1.txt")
-    #fnameL2 = os.path.join(path_WOS,"WebOfScience/WOS5736/YL2.txt")
+    # fname = os.path.join(path_WOS,"WebOfScience/WOS5736/X.txt")
+    # fnamek = os.path.join(path_WOS,"WebOfScience/WOS5736/YL1.txt")
+    # fnameL2 = os.path.join(path_WOS,"WebOfScience/WOS5736/YL2.txt")
     fname = filename_X
     fnamek = filename_Y1
     fnameL2 = filename_Y2
@@ -182,7 +180,7 @@ def loadData():
         contentL2 = [x.strip() for x in contentL2]
     Label = np.matrix(contentk, dtype=int)
     Label = np.transpose(Label)
-    number_of_classes_L1 = np.max(Label)+1  # number of classes in Level 1
+    number_of_classes_L1 = np.max(Label) + 1  # number of classes in Level 1
 
     Label_L2 = np.matrix(contentL2, dtype=int)
     Label_L2 = np.transpose(Label_L2)
@@ -191,9 +189,9 @@ def loadData():
     print(Label_L2.shape)
     Label = np.column_stack((Label, Label_L2))
 
-    number_of_classes_L2 = np.zeros(number_of_classes_L1,dtype=int)
+    number_of_classes_L2 = np.zeros(number_of_classes_L1, dtype=int)
 
-    X_train, X_test, y_train, y_test  = train_test_split(content, Label, test_size=0.2, random_state=0, shuffle=False)
+    X_train, X_test, y_train, y_test = train_test_split(content, Label, test_size=0.2, random_state=0, shuffle=False)
 
     vectorizer_x = CountVectorizer()
     X_train = vectorizer_x.fit_transform(X_train).toarray()
@@ -210,10 +208,9 @@ def loadData():
         content_L2_Train.append([])
         content_L2_Test.append([])
 
-
     for i in range(0, X_train.shape[0]):
         L2_Train[y_train[i, 0]].append(y_train[i, 1])
-        number_of_classes_L2[y_train[i, 0]] = max(number_of_classes_L2[y_train[i, 0]],(y_train[i, 1]+1))
+        number_of_classes_L2[y_train[i, 0]] = max(number_of_classes_L2[y_train[i, 0]], (y_train[i, 1] + 1))
         content_L2_Train[y_train[i, 0]].append(X_train[i])
 
     for i in range(0, X_test.shape[0]):
@@ -225,4 +222,6 @@ def loadData():
         L2_Test[i] = np.array(L2_Test[i])
         content_L2_Train[i] = np.array(content_L2_Train[i])
         content_L2_Test[i] = np.array(content_L2_Test[i])
-    return (X_train,y_train,X_test,y_test,content_L2_Train,L2_Train,content_L2_Test,L2_Test,number_of_classes_L2,number_of_classes_L1)
+    return (
+    X_train, y_train, X_test, y_test, content_L2_Train, L2_Train, content_L2_Test, L2_Test, number_of_classes_L2,
+    number_of_classes_L1)
