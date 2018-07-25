@@ -62,7 +62,7 @@ MAX_SEQUENCE_LENGTH is maximum lenght of text sequences,
 EMBEDDING_DIM is an int value for dimention of word embedding look at data_helper.py 
 Complexity we have two different CNN model as follows 
 Complexity=0 is simple CNN with 3 hidden layer
-Complexity=2 is more complex model of CNN with filter_length of [3, 4, 5, 6, 7]
+Complexity=1 is more complex model of CNN with filter_length of [3, 4, 5, 6, 7]
 '''
 def buildModel_CNN(word_index,embeddings_index,nClasses,MAX_SEQUENCE_LENGTH,EMBEDDING_DIM,Complexity=1):
     if Complexity==0:
