@@ -119,7 +119,7 @@ def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
         embedded_sequences = embedding_layer(sequence_input)
 
         convs = []
-        filter_sizes = [2, 3, 4, 5, 6, 7]
+        filter_sizes = [3, 4, 5, 6, 7]
         for fsz in filter_sizes:
             #l_conv = Conv1D(128, filter_length=fsz, activation='relu')(embedded_sequences)  # old api
             l_conv = Conv1D(128, kernel_size=fsz, activation='relu')(embedded_sequences)
@@ -128,7 +128,8 @@ def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
 
         # l_merge = Merge(mode='concat', concat_axis=1)(convs)  # old api
         l_merge = merge.concatenate(convs, axis=1)
-        l_cov1 = Conv1D(128, 5, activation='relu')(l_merge)
+        #l_cov1 = Conv1D(128, 5, activation='relu')(l_merge)
+        l_cov1 = Conv1D(128, 25, activation='relu')(l_merge)
         l_pool1 = MaxPooling1D(5)(l_cov1)
         l_cov2 = Conv1D(128, 5, activation='relu')(l_pool1)
         l_pool2 = MaxPooling1D(30)(l_cov2)  # TODO why not right?
