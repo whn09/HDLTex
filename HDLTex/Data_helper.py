@@ -14,6 +14,11 @@ path_WOS = WOS.download_and_extract()
 GLOVE_DIR = GloVe.download_and_extract()
 print(GLOVE_DIR)
 
+base_dir = '../../dataset/haha_single_video_item/haha_single_video_item.raw.20180723'
+filename_X = base_dir+'.X'
+filename_Y1 = base_dir+'.Y1'
+filename_Y2 = base_dir+'.Y2'
+
 def clean_str(string):
     """
     Tokenization/string cleaning for dataset
@@ -57,9 +62,12 @@ def text_cleaner(text):
 def loadData_Tokenizer(MAX_NB_WORDS,MAX_SEQUENCE_LENGTH):
 
     
-    fname = os.path.join(path_WOS,"WebOfScience/WOS5736/X.txt")
-    fnamek = os.path.join(path_WOS,"WebOfScience/WOS5736/YL1.txt")
-    fnameL2 = os.path.join(path_WOS,"WebOfScience/WOS5736/YL2.txt")
+    #fname = os.path.join(path_WOS,"WebOfScience/WOS5736/X.txt")
+    #fnamek = os.path.join(path_WOS,"WebOfScience/WOS5736/YL1.txt")
+    #fnameL2 = os.path.join(path_WOS,"WebOfScience/WOS5736/YL2.txt")
+    fname = filename_X
+    fnamek = filename_Y1
+    fnameL2 = filename_Y2
 
     with open(fname) as f:
         content = f.readlines()
@@ -156,9 +164,12 @@ def loadData_Tokenizer(MAX_NB_WORDS,MAX_SEQUENCE_LENGTH):
 
 def loadData():
     WOS.download_and_extract()
-    fname = os.path.join(path_WOS,"WebOfScience/WOS5736/X.txt")
-    fnamek = os.path.join(path_WOS,"WebOfScience/WOS5736/YL1.txt")
-    fnameL2 = os.path.join(path_WOS,"WebOfScience/WOS5736/YL2.txt")
+    #fname = os.path.join(path_WOS,"WebOfScience/WOS5736/X.txt")
+    #fnamek = os.path.join(path_WOS,"WebOfScience/WOS5736/YL1.txt")
+    #fnameL2 = os.path.join(path_WOS,"WebOfScience/WOS5736/YL2.txt")
+    fname = filename_X
+    fnamek = filename_Y1
+    fnameL2 = filename_Y2
     with open(fname) as f:
         content = f.readlines()
         content = [text_cleaner(x) for x in content]

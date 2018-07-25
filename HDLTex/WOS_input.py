@@ -14,10 +14,10 @@ print(sys.version_info)
 
 
 # path to the directory with the data
-DATA_DIR = '.\data_WOS'
+DATA_DIR = '../../dataset/'
 
 # url of the binary data
-DATA_URL = 'http://kowsari.net/WebOfScience.tar.gz'
+DATA_URL = 'http://kowsari.net/WebOfScience.zip'
 
 
 # path to the binary train file with image data

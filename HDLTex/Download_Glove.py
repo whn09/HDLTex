@@ -15,10 +15,10 @@ print(sys.version_info)
 
 
 # path to the directory with the data
-DATA_DIR = '.\Glove'
+DATA_DIR = '../../dataset/'
 
 # url of the binary data
-DATA_URL = 'http://nlp.stanford.edu/data/glove.6B.zip'
+DATA_URL = 'http://nlp.stanford.edu/data/glove.6B.100d.zip'
 
 
 # path to the binary train file with image data

@@ -2,7 +2,7 @@ from keras.models import Sequential
 from keras.models import Model
 import numpy as np
 from keras.layers import Dense, Input, Flatten
-from keras.layers import Conv1D, MaxPooling1D, Embedding, Merge, Dropout, LSTM, GRU, Bidirectional,SimpleRNN
+from keras.layers import Conv1D, MaxPooling1D, Embedding, merge, Dropout, LSTM, GRU, Bidirectional,SimpleRNN
 '''
 buildModel_DNN(nFeatures, nClasses, nLayers=3,Numberof_NOde=100, dropout=0.5)
 Build Deep neural networks Model for text classification
@@ -118,11 +118,13 @@ def buildModel_CNN(word_index,embeddings_index,nClasses,MAX_SEQUENCE_LENGTH,EMBE
             l_pool = MaxPooling1D(5)(l_conv)
             convs.append(l_pool)
 
-        l_merge = Merge(mode='concat', concat_axis=1)(convs)
+        #l_merge = merge(mode='concat', concat_axis=1)(convs)
+        l_merge = merge.concatenate(convs, axis=1)
         l_cov1 = Conv1D(128, 5, activation='relu')(l_merge)
         l_pool1 = MaxPooling1D(5)(l_cov1)
         l_cov2 = Conv1D(128, 5, activation='relu')(l_pool1)
-        l_pool2 = MaxPooling1D(30)(l_cov2)
+        #l_pool2 = MaxPooling1D(30)(l_cov2)
+        l_pool2 = MaxPooling1D(14)(l_cov2)
         l_flat = Flatten()(l_pool2)
         l_dense = Dense(128, activation='relu')(l_flat)
         preds = Dense(nClasses, activation='softmax')(l_dense)
