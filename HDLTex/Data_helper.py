@@ -107,7 +107,7 @@ def loadData_Tokenizer(MAX_NB_WORDS,MAX_SEQUENCE_LENGTH):
     Label = Label[indices]
     print(content.shape)
 
-    X_train, X_test, y_train, y_test = train_test_split(content, Label, test_size=0.2, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(content, Label, test_size=0.2, random_state=0, shuffle=False)
 
     L2_Train = []
     L2_Test = []
@@ -192,7 +192,7 @@ def loadData():
 
     number_of_classes_L2 = np.zeros(number_of_classes_L1,dtype=int)
 
-    X_train, X_test, y_train, y_test  = train_test_split(content, Label, test_size=0.2,random_state= 0)
+    X_train, X_test, y_train, y_test  = train_test_split(content, Label, test_size=0.2, random_state=0, shuffle=False)
 
     vectorizer_x = CountVectorizer()
     X_train = vectorizer_x.fit_transform(X_train).toarray()
