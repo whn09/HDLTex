@@ -1,4 +1,7 @@
 import os
+from keras.callbacks import TensorBoard
+
+
 os.environ['KERAS_BACKEND'] = 'tensorflow'
 #os.environ["THEANO_FLAGS"] = "mode=FAST_RUN"
 
@@ -55,7 +58,8 @@ if __name__ == "__main__":
                   validation_data=(X_test, y_test[:,0]),
                   epochs=epochs,
                   verbose=2,
-                  batch_size=batch_size_L1)
+                  batch_size=batch_size_L1,
+                  callbacks=[TensorBoard(log_dir='./logs')])
         preds = model.predict(X_test, batch_size=128)
         fout = open('preds.txt', 'w')
         for i in range(len(X_test)):
@@ -103,7 +107,8 @@ if __name__ == "__main__":
                           validation_data=(content_L2_Test[i], L2_Test[i]),
                           epochs=epochs,
                           verbose=2,
-                          batch_size=batch_size_L2)
+                          batch_size=batch_size_L2,
+                          callbacks=[TensorBoard(log_dir='./logs_'+str(i))])
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
             fout = open('preds_'+str(i)+'.txt', 'w')
             for j in range(len(content_L2_Test[i])):
