@@ -121,7 +121,8 @@ def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
         convs = []
         filter_sizes = [3, 4, 5, 6, 7]
         for fsz in filter_sizes:
-            l_conv = Conv1D(128, filter_length=fsz, activation='relu')(embedded_sequences)
+            #l_conv = Conv1D(128, filter_length=fsz, activation='relu')(embedded_sequences)
+            l_conv = Conv1D(128, kernel_size=fsz, activation='relu')(embedded_sequences)
             l_pool = MaxPooling1D(5)(l_conv)
             convs.append(l_pool)
 
