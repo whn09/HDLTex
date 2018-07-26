@@ -131,11 +131,14 @@ def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
         l_merge = merge.concatenate(convs, axis=1)
         l_cov1 = Conv1D(128, 5, activation='relu')(l_merge)
         l_pool1 = MaxPooling1D(5)(l_cov1)
+        l_pool1 = Dropout(0.2)(l_pool1)  # add dropout
         l_cov2 = Conv1D(128, 5, activation='relu')(l_pool1)
-        #l_pool2 = MaxPooling1D(30)(l_cov2)  # TODO why not right?
+        #l_pool2 = MaxPooling1D(30)(l_cov2)  # old parameter
         l_pool2 = MaxPooling1D(6)(l_cov2)
+        l_pool2 = Dropout(0.2)(l_pool2)  # add dropout
         l_flat = Flatten()(l_pool2)
         l_dense = Dense(128, activation='relu')(l_flat)
+        l_dense = Dropout(0.2)(l_dense)  # add dropout
         preds = Dense(nClasses, activation='softmax')(l_dense)
         model = Model(sequence_input, preds)
         model.compile(loss='sparse_categorical_crossentropy',
