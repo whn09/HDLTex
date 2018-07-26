@@ -71,7 +71,7 @@ if __name__ == "__main__":
         model.save('model.h5')
         fout = open('preds.txt', 'w')
         for i in range(len(X_test)):
-            fout.write(str(preds[i]) + '\n')
+            fout.write(str(np.argsort(preds[i])[-1]) + '\n')
     #######################RNN Level 1########################
     if L1_model == 2:
         print('Create model of RNN')
@@ -126,4 +126,4 @@ if __name__ == "__main__":
             model.save('model_'+str(i)+'.h5')
             fout = open('preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
-                fout.write(str(preds[j]) + '\n')
+                fout.write(str(np.argsort(preds[i])[-1]) + '\n')
