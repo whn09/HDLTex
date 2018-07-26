@@ -119,8 +119,8 @@ def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
         embedded_sequences = embedding_layer(sequence_input)
 
         convs = []
-        #filter_sizes = [3, 4, 5, 6, 7]
-        filter_sizes = [6, 7, 8]
+        filter_sizes = [3, 4, 5, 6, 7]
+        #filter_sizes = [6, 7, 8]
         for fsz in filter_sizes:
             #l_conv = Conv1D(128, filter_length=fsz, activation='relu')(embedded_sequences)  # old api
             l_conv = Conv1D(128, kernel_size=fsz, activation='relu')(embedded_sequences)

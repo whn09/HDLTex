@@ -143,7 +143,7 @@ def loadData_Tokenizer(MAX_NB_WORDS, MAX_SEQUENCE_LENGTH):
     '''
     For CNN and RNN, we used the text vector-space models using $100$ dimensions as described in Glove. A vector-space model is a mathematical mapping of the word space
     '''
-    Glove_path = os.path.join(GLOVE_DIR, 'glove.6B.100d.txt')
+    Glove_path = os.path.join(GLOVE_DIR, 'glove.6B.300d.txt')
     print(Glove_path)
     f = open(Glove_path, encoding="utf8")
     for line in f:
