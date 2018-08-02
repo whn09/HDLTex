@@ -14,7 +14,7 @@ path_WOS = WOS.download_and_extract()
 GLOVE_DIR = GloVe.download_and_extract()
 print(GLOVE_DIR)
 
-base_dir = '../../dataset/haha_single_video_item/haha_single_video_item.raw.20180723'
+base_dir = '../../dataset/haha_single_video_item/haha_single_video_item.raw.human_labeling.20180723'
 filename_X = base_dir + '.X'
 filename_Y1 = base_dir + '.Y1'
 filename_Y2 = base_dir + '.Y2'
