@@ -25,7 +25,7 @@ if __name__ == "__main__":
     epochs = 10
 
     L1_model = 1  # 0 is DNN, 1 is CNN, and 2 is RNN for Level 1
-    L2_model = 2  # 0 is DNN, 1 is CNN, and 2 is RNN for Level 2
+    L2_model = 1  # 0 is DNN, 1 is CNN, and 2 is RNN for Level 2
 
     np.set_printoptions(threshold=np.inf)
     '''
@@ -46,14 +46,14 @@ if __name__ == "__main__":
 
     print("Loading Data is Done")
     #######################DNN Level 1########################
-    if L1_model == 0:
-        print('Create model of DNN')
-        model = BuildModel.buildModel_DNN(X_train_DNN.shape[1], number_of_classes_L1, 8, 64, dropout=0.25)
-        model.fit(X_train_DNN, y_train_DNN[:, 0],
-                  validation_data=(X_test_DNN, y_test_DNN[:, 0]),
-                  epochs=epochs,
-                  verbose=2,
-                  batch_size=batch_size_L1)
+    #if L1_model == 0:
+    #    print('Create model of DNN')
+    #    model = BuildModel.buildModel_DNN(X_train_DNN.shape[1], number_of_classes_L1, 8, 64, dropout=0.25)
+    #    model.fit(X_train_DNN, y_train_DNN[:, 0],
+    #              validation_data=(X_test_DNN, y_test_DNN[:, 0]),
+    #              epochs=epochs,
+    #              verbose=2,
+    #              batch_size=batch_size_L1)
 
     #######################CNN Level 1########################
     if L1_model == 1:
@@ -72,6 +72,7 @@ if __name__ == "__main__":
         fout = open('preds.txt', 'w')
         for i in range(len(X_test)):
             fout.write(str(np.argsort(preds[i])[-1]) + '\n')
+
     #######################RNN Level 1########################
     if L1_model == 2:
         print('Create model of RNN')
@@ -81,25 +82,33 @@ if __name__ == "__main__":
                   validation_data=(X_test, y_test[:, 0]),
                   epochs=epochs,
                   verbose=2,
-                  batch_size=batch_size_L1)
+                  batch_size=batch_size_L1,
+                  callbacks=[TensorBoard(log_dir='./logs')])
+        preds = model.predict(X_test, batch_size=128)
+        plot_model(model, to_file='model.png')
+        model.save('model.h5')
+        fout = open('preds.txt', 'w')
+        for i in range(len(X_test)):
+            fout.write(str(np.argsort(preds[i])[-1]) + '\n')
 
     HDLTex = []  # Level 2 models is list of Deep Structure
     ######################DNN Level 2################################
-    if L2_model == 0:
-        for i in range(0, number_of_classes_L1):
-            print('Create Sub model of ', i)
-            HDLTex.append(Sequential())
-            HDLTex[i] = BuildModel.buildModel_DNN(content_L2_Train_DNN[i].shape[1], number_of_classes_L2_DNN[i], 2,
-                                                  1024, dropout=0.5)
-            HDLTex[i].fit(content_L2_Train_DNN[i], L2_Train_DNN[i],
-                          validation_data=(content_L2_Test_DNN[i], L2_Test_DNN[i]),
-                          epochs=epochs,
-                          verbose=2,
-                          batch_size=batch_size_L2)
+    #if L2_model == 0:
+    #    for i in range(0, number_of_classes_L1):
+    #        print('Create Sub model of ', i)
+    #        HDLTex.append(Sequential())
+    #        HDLTex[i] = BuildModel.buildModel_DNN(content_L2_Train_DNN[i].shape[1], number_of_classes_L2_DNN[i], 2,
+    #                                              1024, dropout=0.5)
+    #        HDLTex[i].fit(content_L2_Train_DNN[i], L2_Train_DNN[i],
+    #                      validation_data=(content_L2_Test_DNN[i], L2_Test_DNN[i]),
+    #                      epochs=epochs,
+    #                      verbose=2,
+    #                      batch_size=batch_size_L2)
+
     ######################CNN Level 2################################
     if L2_model == 1:
         for i in range(0, number_of_classes_L1):
-            print('Create Sub model of ', i)
+            print('Create Sub model of CNN', i)
             HDLTex.append(Sequential())
             HDLTex[i] = BuildModel.buildModel_CNN(word_index, embeddings_index, number_of_classes_L2[i],
                                                   MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, 1)
@@ -107,11 +116,19 @@ if __name__ == "__main__":
                           validation_data=(content_L2_Test[i], L2_Test[i]),
                           epochs=epochs,
                           verbose=2,
-                          batch_size=batch_size_L2)
+                          batch_size=batch_size_L2,
+                          callbacks=[TensorBoard(log_dir='./logs_' + str(i))])
+            preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
+            plot_model(HDLTex[i], to_file='model_' + str(i) + '.png')
+            model.save('model_' + str(i) + '.h5')
+            fout = open('preds_' + str(i) + '.txt', 'w')
+            for j in range(len(content_L2_Test[i])):
+                fout.write(str(np.argsort(preds[i])[-1]) + '\n')
+
     ######################RNN Level 2################################
     if L2_model == 2:
         for i in range(0, number_of_classes_L1):
-            print('Create Sub model of ', i)
+            print('Create Sub model of RNN', i)
             HDLTex.append(Sequential())
             HDLTex[i] = BuildModel.buildModel_RNN(word_index, embeddings_index, number_of_classes_L2[i],
                                                   MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
