@@ -127,7 +127,7 @@ def loadData_Tokenizer(MAX_NB_WORDS, MAX_SEQUENCE_LENGTH, embedding_type='glove'
     if is_train:
         X_train, X_test, y_train, y_test = train_test_split(content, Label, test_size=0.2, random_state=0, shuffle=False)
     else:
-        X_train, X_test, y_train, y_test = train_test_split(content, Label, test_size=1, random_state=0, shuffle=False)
+        X_train, X_test, y_train, y_test = train_test_split(content, Label, test_size=1.0, random_state=0, shuffle=False)
 
     L2_Train = []
     L2_Test = []
