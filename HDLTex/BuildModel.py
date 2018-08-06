@@ -44,7 +44,8 @@ def buildModel_RNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
     model = Sequential()
     embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
     for word, i in word_index.items():
-        embedding_vector = embeddings_index.get(word)
+        #embedding_vector = embeddings_index.get(word)
+        embedding_vector = embeddings_index[word]
         if embedding_vector is not None:
             # words not found in embedding index will be all-zeros.
             embedding_matrix[i] = embedding_vector
@@ -78,7 +79,8 @@ def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
     if Complexity == 0:
         embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
         for word, i in word_index.items():
-            embedding_vector = embeddings_index.get(word)
+            #embedding_vector = embeddings_index.get(word)
+            embedding_vector = embeddings_index[word]
             if embedding_vector is not None:
                 embedding_matrix[i] = embedding_vector
         embedding_layer = Embedding(len(word_index) + 1,
@@ -106,7 +108,8 @@ def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
     else:
         embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
         for word, i in word_index.items():
-            embedding_vector = embeddings_index.get(word)
+            #embedding_vector = embeddings_index.get(word)
+            embedding_vector = embeddings_index[word]
             if embedding_vector is not None:
                 # words not found in embedding index will be all-zeros.
                 embedding_matrix[i] = embedding_vector
