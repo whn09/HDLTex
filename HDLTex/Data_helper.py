@@ -61,7 +61,7 @@ def text_cleaner(text):
     return text.lower()
 
 
-def loadData_Tokenizer(MAX_NB_WORDS, MAX_SEQUENCE_LENGTH):
+def loadData_Tokenizer(MAX_NB_WORDS, MAX_SEQUENCE_LENGTH, embedding_type='glove'):
     # fname = os.path.join(path_WOS,"WebOfScience/WOS5736/X.txt")
     # fnamek = os.path.join(path_WOS,"WebOfScience/WOS5736/YL1.txt")
     # fnameL2 = os.path.join(path_WOS,"WebOfScience/WOS5736/YL2.txt")
@@ -143,18 +143,25 @@ def loadData_Tokenizer(MAX_NB_WORDS, MAX_SEQUENCE_LENGTH):
     '''
     For CNN and RNN, we used the text vector-space models using $100$ dimensions as described in Glove. A vector-space model is a mathematical mapping of the word space
     '''
-    Glove_path = os.path.join(GLOVE_DIR, 'glove.6B.300d.txt')
-    print(Glove_path)
-    f = open(Glove_path, encoding="utf8")
-    for line in f:
-        values = line.split()
-        word = values[0]
-        try:
-            coefs = np.asarray(values[1:], dtype='float32')
-        except:
-            print("Warnning" + str(values) + " in" + str(line))
-        embeddings_index[word] = coefs
-    f.close()
+    if embedding_type == 'glove':
+        Glove_path = os.path.join(GLOVE_DIR, 'glove.6B.300d.txt')
+        print(Glove_path)
+        f = open(Glove_path, encoding="utf8")
+        for line in f:
+            values = line.split()
+            word = values[0]
+            try:
+                coefs = np.asarray(values[1:], dtype='float32')
+            except:
+                print("Warnning" + str(values) + " in" + str(line))
+            embeddings_index[word] = coefs
+        f.close()
+    elif embedding_type == 'word2vec':
+        Glove_path = os.path.join(GLOVE_DIR, 'GoogleNews-vectors-negative300.bin')
+        print(Glove_path)
+        from gensim.models import KeyedVectors as w
+        embeddings_index = w.load_word2vec_format(Glove_path, binary='bin')
+
     print('Total %s word vectors.' % len(embeddings_index))
     return (
     X_train, y_train, X_test, y_test, content_L2_Train, L2_Train, content_L2_Test, L2_Test, number_of_classes_L2,
