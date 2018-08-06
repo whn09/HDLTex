@@ -124,7 +124,10 @@ def loadData_Tokenizer(MAX_NB_WORDS, MAX_SEQUENCE_LENGTH, embedding_type='glove'
     Label = Label[indices]
     print(content.shape)
 
-    X_train, X_test, y_train, y_test = train_test_split(content, Label, test_size=0.2, random_state=0, shuffle=False)
+    if is_train:
+        X_train, X_test, y_train, y_test = train_test_split(content, Label, test_size=0.2, random_state=0, shuffle=False)
+    else:
+        X_train, X_test, y_train, y_test = train_test_split(content, Label, test_size=1, random_state=0, shuffle=False)
 
     L2_Train = []
     L2_Test = []
