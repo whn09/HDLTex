@@ -48,9 +48,9 @@ if __name__ == "__main__":
         print('Create model of CNN')
         model = BuildModel.buildModel_CNN(word_index, embeddings_index, number_of_classes_L1, MAX_SEQUENCE_LENGTH,
                                           EMBEDDING_DIM, 1)
-        model.load_weights('model.h5')
+        model.load_weights('model/model.h5')
         preds = model.predict(X_test, batch_size=128)
-        fout = open('preds.txt', 'w')
+        fout = open('output/preds.txt', 'w')
         for i in range(len(X_test)):
             fout.write(str(np.argsort(preds[i])[-1]) + '\n')
 
@@ -59,9 +59,9 @@ if __name__ == "__main__":
         print('Create model of RNN')
         model = BuildModel.buildModel_RNN(word_index, embeddings_index, number_of_classes_L1, MAX_SEQUENCE_LENGTH,
                                           EMBEDDING_DIM)
-        model.load_weights('model.h5')
+        model.load_weights('model/model.h5')
         preds = model.predict(X_test, batch_size=128)
-        fout = open('preds.txt', 'w')
+        fout = open('output/preds.txt', 'w')
         for i in range(len(X_test)):
             fout.write(str(np.argsort(preds[i])[-1]) + '\n')
 
@@ -74,9 +74,9 @@ if __name__ == "__main__":
             HDLTex.append(Sequential())
             HDLTex[i] = BuildModel.buildModel_CNN(word_index, embeddings_index, number_of_classes_L2[i],
                                                   MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, 1)
-            HDLTex[i].load_weights('model_' + str(i) + '.h5')
+            HDLTex[i].load_weights('model/model_' + str(i) + '.h5')
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
-            fout = open('preds_' + str(i) + '.txt', 'w')
+            fout = open('output/preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
                 fout.write(str(np.argsort(preds[i])[-1]) + '\n')
 
@@ -87,8 +87,8 @@ if __name__ == "__main__":
             HDLTex.append(Sequential())
             HDLTex[i] = BuildModel.buildModel_RNN(word_index, embeddings_index, number_of_classes_L2[i],
                                                   MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
-            HDLTex[i].load_weights('model_' + str(i) + '.h5')
+            HDLTex[i].load_weights('model/model_' + str(i) + '.h5')
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
-            fout = open('preds_' + str(i) + '.txt', 'w')
+            fout = open('output/preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
                 fout.write(str(np.argsort(preds[i])[-1]) + '\n')

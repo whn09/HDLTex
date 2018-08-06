@@ -68,8 +68,8 @@ if __name__ == "__main__":
                   callbacks=[TensorBoard(log_dir='./logs')])
         preds = model.predict(X_test, batch_size=128)
         plot_model(model, to_file='model.png')
-        model.save('model.h5')
-        fout = open('preds.txt', 'w')
+        model.save('model/model.h5')
+        fout = open('output/preds.txt', 'w')
         for i in range(len(X_test)):
             fout.write(str(np.argsort(preds[i])[-1]) + '\n')
 
@@ -83,11 +83,11 @@ if __name__ == "__main__":
                   epochs=epochs,
                   verbose=2,
                   batch_size=batch_size_L1,
-                  callbacks=[TensorBoard(log_dir='./logs')])
+                  callbacks=[TensorBoard(log_dir='./log/logs')])
         preds = model.predict(X_test, batch_size=128)
         plot_model(model, to_file='model.png')
-        model.save('model.h5')
-        fout = open('preds.txt', 'w')
+        model.save('model/model.h5')
+        fout = open('output/preds.txt', 'w')
         for i in range(len(X_test)):
             fout.write(str(np.argsort(preds[i])[-1]) + '\n')
 
@@ -117,11 +117,11 @@ if __name__ == "__main__":
                           epochs=epochs,
                           verbose=2,
                           batch_size=batch_size_L2,
-                          callbacks=[TensorBoard(log_dir='./logs_' + str(i))])
+                          callbacks=[TensorBoard(log_dir='./log/logs_' + str(i))])
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
             plot_model(HDLTex[i], to_file='model_' + str(i) + '.png')
-            model.save('model_' + str(i) + '.h5')
-            fout = open('preds_' + str(i) + '.txt', 'w')
+            model.save('model/model_' + str(i) + '.h5')
+            fout = open('output/preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
                 fout.write(str(np.argsort(preds[i])[-1]) + '\n')
 
@@ -137,10 +137,10 @@ if __name__ == "__main__":
                           epochs=epochs,
                           verbose=2,
                           batch_size=batch_size_L2,
-                          callbacks=[TensorBoard(log_dir='./logs_' + str(i))])
+                          callbacks=[TensorBoard(log_dir='./log/logs_' + str(i))])
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
             plot_model(HDLTex[i], to_file='model_'+str(i)+'.png')
-            model.save('model_'+str(i)+'.h5')
-            fout = open('preds_' + str(i) + '.txt', 'w')
+            model.save('model/model_'+str(i)+'.h5')
+            fout = open('output/preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
                 fout.write(str(np.argsort(preds[i])[-1]) + '\n')
