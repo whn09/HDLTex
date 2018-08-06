@@ -48,24 +48,24 @@ if __name__ == "__main__":
 
     #######################CNN Level 1########################
     if L1_model == 1:
-        print('Create model of CNN')
+        print('Load model of CNN')
         model = BuildModel.buildModel_CNN(word_index, embeddings_index, number_of_classes_L1, MAX_SEQUENCE_LENGTH,
                                           EMBEDDING_DIM, 1, word_index_length=word_index_length)
         model.load_weights('model/model.h5')
         preds = model.predict(X_test, batch_size=128)
-        model.evaluate(X_test, y_test, batch_size=128)
+        model.evaluate(X_test, y_test[:, 0], batch_size=128)
         fout = open('output/preds.txt', 'w')
         for i in range(len(X_test)):
             fout.write(str(np.argsort(preds[i])[-1]) + '\n')
 
     #######################RNN Level 1########################
     if L1_model == 2:
-        print('Create model of RNN')
+        print('Load model of RNN')
         model = BuildModel.buildModel_RNN(word_index, embeddings_index, number_of_classes_L1, MAX_SEQUENCE_LENGTH,
                                           EMBEDDING_DIM, word_index_length=word_index_length)
         model.load_weights('model/model.h5')
         preds = model.predict(X_test, batch_size=128)
-        model.evaluate(X_test, y_test, batch_size=128)
+        model.evaluate(X_test, y_test[:, 0], batch_size=128)
         fout = open('output/preds.txt', 'w')
         for i in range(len(X_test)):
             fout.write(str(np.argsort(preds[i])[-1]) + '\n')
@@ -75,13 +75,13 @@ if __name__ == "__main__":
     ######################CNN Level 2################################
     if L2_model == 1:
         for i in range(0, number_of_classes_L1):
-            print('Create Sub model of CNN', i)
+            print('Load Sub model of CNN', i)
             HDLTex.append(Sequential())
             HDLTex[i] = BuildModel.buildModel_CNN(word_index, embeddings_index, number_of_classes_L2[i],
                                                   MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, 1, word_index_length=word_index_length)
             HDLTex[i].load_weights('model/model_' + str(i) + '.h5')
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
-            model.evaluate(X_test, y_test, batch_size=128)
+            model.evaluate(content_L2_Test[i], L2_Test[i], batch_size=128)
             fout = open('output/preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
                 fout.write(str(np.argsort(preds[i])[-1]) + '\n')
@@ -89,13 +89,13 @@ if __name__ == "__main__":
     ######################RNN Level 2################################
     if L2_model == 2:
         for i in range(0, number_of_classes_L1):
-            print('Create Sub model of RNN', i)
+            print('Load Sub model of RNN', i)
             HDLTex.append(Sequential())
             HDLTex[i] = BuildModel.buildModel_RNN(word_index, embeddings_index, number_of_classes_L2[i],
                                                   MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, word_index_length=word_index_length)
             HDLTex[i].load_weights('model/model_' + str(i) + '.h5')
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
-            model.evaluate(X_test, y_test, batch_size=128)
+            model.evaluate(content_L2_Test[i], L2_Test[i], batch_size=128)
             fout = open('output/preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
                 fout.write(str(np.argsort(preds[i])[-1]) + '\n')
