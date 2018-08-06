@@ -39,7 +39,7 @@ if __name__ == "__main__":
     print('X_train:', len(X_train), 'y_train:', len(y_train), 'X_test:', len(X_test), 'y_test:', len(y_test),
           'content_L2_Train:', len(content_L2_Train), 'L2_Train:', len(L2_Train), 'content_L2_Test:',
           len(content_L2_Test), 'L2_Test:', len(L2_Test), 'number_of_classes_L2:', number_of_classes_L2, 'word_index:',
-          len(word_index), 'embeddings_index:', len(embeddings_index), 'number_of_classes_L1:', number_of_classes_L1)
+          len(word_index), 'number_of_classes_L1:', number_of_classes_L1)
 
     print("Loading Data is Done")
 
