@@ -19,12 +19,18 @@ filename_X = base_dir + '.X'
 filename_Y1 = base_dir + '.Y1'
 filename_Y2 = base_dir + '.Y2'
 
+test_filename = '../../dataset/tag/human_labeling_test_20180806.txt'
+test_filename_X = test_filename + '.X'
+test_filename_Y1 = test_filename + '.Y1'
+test_filename_Y2 = test_filename + '.Y2'
+
 
 def clean_str(string):
     """
     Tokenization/string cleaning for dataset
     Every dataset is lower cased except
     """
+    string = string.split(' __label__')[0]  # for funny
     string = re.sub(r"\\", "", string)
     string = re.sub(r"\'", "", string)
     string = re.sub(r"\"", "", string)
@@ -61,24 +67,35 @@ def text_cleaner(text):
     return text.lower()
 
 
-def loadData_Tokenizer(MAX_NB_WORDS, MAX_SEQUENCE_LENGTH, embedding_type='glove'):
+def loadData_Tokenizer(MAX_NB_WORDS, MAX_SEQUENCE_LENGTH, embedding_type='glove', is_train=True):
     # fname = os.path.join(path_WOS,"WebOfScience/WOS5736/X.txt")
     # fnamek = os.path.join(path_WOS,"WebOfScience/WOS5736/YL1.txt")
     # fnameL2 = os.path.join(path_WOS,"WebOfScience/WOS5736/YL2.txt")
-    fname = filename_X
-    fnamek = filename_Y1
-    fnameL2 = filename_Y2
+    if is_train:
+        fname = filename_X
+        fnamek = filename_Y1
+        fnameL2 = filename_Y2
+    else:
+        fname = test_filename_X
+        fnamek = test_filename_Y1
+        fnameL2 = test_filename_Y2
 
     with open(fname) as f:
         content = f.readlines()
         content = [clean_str(x) for x in content]
     content = np.array(content)
-    with open(fnamek) as fk:
-        contentk = fk.readlines()
-    contentk = [x.strip() for x in contentk]
-    with open(fnameL2) as fk:
-        contentL2 = fk.readlines()
-        contentL2 = [x.strip() for x in contentL2]
+    try:
+        with open(fnamek) as fk:
+            contentk = fk.readlines()
+            contentk = [x.strip() for x in contentk]
+    except:
+        contentk = [0 for x in content]
+    try:
+        with open(fnameL2) as fk:
+            contentL2 = fk.readlines()
+            contentL2 = [x.strip() for x in contentL2]
+    except:
+        contentL2 = [0 for x in content]
     Label = np.matrix(contentk, dtype=int)
     Label = np.transpose(Label)
     number_of_classes_L1 = np.max(Label) + 1  # number of classes in Level 1
