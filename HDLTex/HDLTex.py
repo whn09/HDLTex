@@ -120,7 +120,7 @@ if __name__ == "__main__":
                           callbacks=[TensorBoard(log_dir='./log/logs_' + str(i))])
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
             plot_model(HDLTex[i], to_file='model_' + str(i) + '.png')
-            model.save('model/model_' + str(i) + '.h5')
+            HDLTex[i].save('model/model_' + str(i) + '.h5')
             fout = open('output/preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
                 fout.write(str(np.argsort(preds[i])[-1]) + '\n')
@@ -140,7 +140,7 @@ if __name__ == "__main__":
                           callbacks=[TensorBoard(log_dir='./log/logs_' + str(i))])
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
             plot_model(HDLTex[i], to_file='model_'+str(i)+'.png')
-            model.save('model/model_'+str(i)+'.h5')
+            HDLTex[i].save('model/model_'+str(i)+'.h5')
             fout = open('output/preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
                 fout.write(str(np.argsort(preds[i])[-1]) + '\n')
