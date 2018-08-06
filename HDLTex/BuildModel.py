@@ -78,9 +78,11 @@ Complexity=1 is more complex model of CNN with filter_length of [3, 4, 5, 6, 7]
 '''
 
 
-def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, Complexity=1):
+def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, Complexity=1, word_index_length=None):
+    if word_index_length is None:
+        word_index_length = len(word_index)
     if Complexity == 0:
-        embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
+        embedding_matrix = np.random.random((word_index_length + 1, EMBEDDING_DIM))
         for word, i in word_index.items():
             #embedding_vector = embeddings_index.get(word)
             try:
