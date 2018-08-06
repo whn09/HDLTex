@@ -40,9 +40,11 @@ EMBEDDING_DIM is an int value for dimention of word embedding look at data_helpe
 '''
 
 
-def buildModel_RNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM):
+def buildModel_RNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, word_index_length=None):
+    if word_index_length is None:
+        word_index_length = len(word_index)
     model = Sequential()
-    embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
+    embedding_matrix = np.random.random((word_index_length + 1, EMBEDDING_DIM))
     for word, i in word_index.items():
         #embedding_vector = embeddings_index.get(word)
         try:
@@ -52,7 +54,7 @@ def buildModel_RNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
         if embedding_vector is not None:
             # words not found in embedding index will be all-zeros.
             embedding_matrix[i] = embedding_vector
-    model.add(Embedding(len(word_index) + 1,
+    model.add(Embedding(word_index_length + 1,
                         EMBEDDING_DIM,
                         weights=[embedding_matrix],
                         input_length=MAX_SEQUENCE_LENGTH,
@@ -91,7 +93,7 @@ def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
                 embedding_vector = None
             if embedding_vector is not None:
                 embedding_matrix[i] = embedding_vector
-        embedding_layer = Embedding(len(word_index) + 1,
+        embedding_layer = Embedding(word_index_length + 1,
                                     EMBEDDING_DIM,
                                     weights=[embedding_matrix],
                                     input_length=MAX_SEQUENCE_LENGTH,
@@ -114,7 +116,7 @@ def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
                       optimizer='rmsprop',
                       metrics=['acc'])
     else:
-        embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
+        embedding_matrix = np.random.random((word_index_length + 1, EMBEDDING_DIM))
         for word, i in word_index.items():
             #embedding_vector = embeddings_index.get(word)
             try:
@@ -124,7 +126,7 @@ def buildModel_CNN(word_index, embeddings_index, nClasses, MAX_SEQUENCE_LENGTH, 
             if embedding_vector is not None:
                 # words not found in embedding index will be all-zeros.
                 embedding_matrix[i] = embedding_vector
-        embedding_layer = Embedding(len(word_index) + 1,
+        embedding_layer = Embedding(word_index_length + 1,
                                     EMBEDDING_DIM,
                                     weights=[embedding_matrix],
                                     input_length=MAX_SEQUENCE_LENGTH,

@@ -61,7 +61,7 @@ if __name__ == "__main__":
     if L1_model == 2:
         print('Create model of RNN')
         model = BuildModel.buildModel_RNN(word_index, embeddings_index, number_of_classes_L1, MAX_SEQUENCE_LENGTH,
-                                          EMBEDDING_DIM)
+                                          EMBEDDING_DIM, word_index_length=word_index_length)
         model.load_weights('model/model.h5')
         preds = model.predict(X_test, batch_size=128)
         fout = open('output/preds.txt', 'w')
@@ -76,7 +76,7 @@ if __name__ == "__main__":
             print('Create Sub model of CNN', i)
             HDLTex.append(Sequential())
             HDLTex[i] = BuildModel.buildModel_CNN(word_index, embeddings_index, number_of_classes_L2[i],
-                                                  MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, 1)
+                                                  MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, 1, word_index_length=word_index_length)
             HDLTex[i].load_weights('model/model_' + str(i) + '.h5')
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
             fout = open('output/preds_' + str(i) + '.txt', 'w')
@@ -89,7 +89,7 @@ if __name__ == "__main__":
             print('Create Sub model of RNN', i)
             HDLTex.append(Sequential())
             HDLTex[i] = BuildModel.buildModel_RNN(word_index, embeddings_index, number_of_classes_L2[i],
-                                                  MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
+                                                  MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, word_index_length=word_index_length)
             HDLTex[i].load_weights('model/model_' + str(i) + '.h5')
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
             fout = open('output/preds_' + str(i) + '.txt', 'w')
