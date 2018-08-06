@@ -156,13 +156,13 @@ def loadData_Tokenizer(MAX_NB_WORDS, MAX_SEQUENCE_LENGTH, embedding_type='glove'
                 print("Warnning" + str(values) + " in" + str(line))
             embeddings_index[word] = coefs
         f.close()
+        print('Total %s word vectors.' % len(embeddings_index))
     elif embedding_type == 'word2vec':
         Glove_path = os.path.join(GLOVE_DIR, 'GoogleNews-vectors-negative300.bin')
         print(Glove_path)
         from gensim.models import KeyedVectors as w
         embeddings_index = w.load_word2vec_format(Glove_path, binary='bin')
 
-    print('Total %s word vectors.' % len(embeddings_index))
     return (
     X_train, y_train, X_test, y_test, content_L2_Train, L2_Train, content_L2_Test, L2_Test, number_of_classes_L2,
     word_index, embeddings_index, number_of_classes_L1)
