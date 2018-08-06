@@ -53,6 +53,7 @@ if __name__ == "__main__":
                                           EMBEDDING_DIM, 1, word_index_length=word_index_length)
         model.load_weights('model/model.h5')
         preds = model.predict(X_test, batch_size=128)
+        model.evaluate(X_test, y_test, batch_size=128)
         fout = open('output/preds.txt', 'w')
         for i in range(len(X_test)):
             fout.write(str(np.argsort(preds[i])[-1]) + '\n')
@@ -64,6 +65,7 @@ if __name__ == "__main__":
                                           EMBEDDING_DIM, word_index_length=word_index_length)
         model.load_weights('model/model.h5')
         preds = model.predict(X_test, batch_size=128)
+        model.evaluate(X_test, y_test, batch_size=128)
         fout = open('output/preds.txt', 'w')
         for i in range(len(X_test)):
             fout.write(str(np.argsort(preds[i])[-1]) + '\n')
@@ -79,6 +81,7 @@ if __name__ == "__main__":
                                                   MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, 1, word_index_length=word_index_length)
             HDLTex[i].load_weights('model/model_' + str(i) + '.h5')
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
+            model.evaluate(X_test, y_test, batch_size=128)
             fout = open('output/preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
                 fout.write(str(np.argsort(preds[i])[-1]) + '\n')
@@ -92,6 +95,7 @@ if __name__ == "__main__":
                                                   MAX_SEQUENCE_LENGTH, EMBEDDING_DIM, word_index_length=word_index_length)
             HDLTex[i].load_weights('model/model_' + str(i) + '.h5')
             preds = HDLTex[i].predict(content_L2_Test[i], batch_size=128)
+            model.evaluate(X_test, y_test, batch_size=128)
             fout = open('output/preds_' + str(i) + '.txt', 'w')
             for j in range(len(content_L2_Test[i])):
                 fout.write(str(np.argsort(preds[i])[-1]) + '\n')

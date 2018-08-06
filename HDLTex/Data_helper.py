@@ -19,7 +19,7 @@ filename_X = base_dir + '.X'
 filename_Y1 = base_dir + '.Y1'
 filename_Y2 = base_dir + '.Y2'
 
-test_filename = '../../dataset/tag/human_labeling_test_20180806.txt'
+test_filename = '../../dataset/tag/human_labeling_test2_20180803.txt'
 test_filename_X = test_filename
 test_filename_Y1 = test_filename + '.Y1'
 test_filename_Y2 = test_filename + '.Y2'
